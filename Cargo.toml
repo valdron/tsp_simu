@@ -1,0 +1,9 @@
+[package]
+name = "simulation_tsp"
+version = "0.1.0"
+authors = ["valdron <seehofer.paul@gmail.com>"]
+
+[dependencies]
+
+nalgebra = "*"
+rand = "*"
