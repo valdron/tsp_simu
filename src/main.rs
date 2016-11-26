@@ -7,6 +7,8 @@ use std::clone::Clone;
 use rand::{Rng,SeedableRng, StdRng};
 use std::thread;
 use std::sync::Arc;
+use std::fs::{File, OpenOptions};
+use std::io::Write;
 
 const EXAMPLE_3_DIST_VEC: &'static [usize] = &[0,144,114,105,31,109,135,132,85,79,158,20,73,162,127,190,156,58,87,71,154,55
     ,144,0,144,181,147,76,195,73,64,114,220,135,71,18,39,60,37,101,62,146,205,153
@@ -282,19 +284,34 @@ fn main() {
         let t_exp3 = exp3.clone();
         let t_exp4 = exp4.clone();
         let t_exp5 = exp5.clone();
+
+
+
+
+
         let thread_exp_3 = thread::spawn( move ||{
             let tour = t_exp3.simulated_annealing(i.0 , i.1, i.2);
-            println!("Example 3 ==> T_High:\t{:?}\tT_Low:\t{:?}\tBeta:\t{:?}\tLength: {:?}\t Tour:\t{:?}",i.0, i.1, i.2, tour.route_length,tour.route);
+            let mut file_3 = OpenOptions::new().append(true)
+                .create(true)
+                .open("example3.txt").unwrap();
+            write!(&mut file_3,"Example 3 ==> T_High:\t{:?}\tT_Low:\t{:?}\tBeta:\t{:?}\tLength: {:?}\t Tour:\t{:?}\n",i.0, i.1, i.2, tour.route_length,tour.route);
         });
 
         let thread_exp_4 = thread::spawn( move ||{
             let tour = t_exp4.simulated_annealing(i.0 , i.1, i.2);
-            println!("Example 4 ==> T_High:\t{:?}\tT_Low:\t{:?}\tBeta:\t{:?}\tLength: {:?}\t Tour:\t{:?}",i.0, i.1, i.2, tour.route_length,tour.route);
+            let mut file_4 = OpenOptions::new().append(true)
+                .create(true)
+                .open("example4.txt").unwrap();
+
+            write!(&mut file_4,"Example 4 ==> T_High:\t{:?}\tT_Low:\t{:?}\tBeta:\t{:?}\tLength: {:?}\t Tour:\t{:?}\n",i.0, i.1, i.2, tour.route_length,tour.route);
         });
 
         let thread_exp_5 = thread::spawn( move ||{
             let tour = t_exp5.simulated_annealing(i.0 , i.1, i.2);
-            println!("Example 5 ==> T_High:\t{:?}\tT_Low:\t{:?}\tBeta:\t{:?}\tLength: {:?}\t Tour:\t{:?}",i.0, i.1, i.2, tour.route_length,tour.route);
+            let mut file_5 = OpenOptions::new().append(true)
+                .create(true)
+                .open("example5.txt").unwrap();
+            write!(&mut file_5,"Example 5 ==> T_High:\t{:?}\tT_Low:\t{:?}\tBeta:\t{:?}\tLength: {:?}\t Tour:\t{:?}\n",i.0, i.1, i.2, tour.route_length,tour.route);
         });
 
         let _ = thread_exp_3.join();
