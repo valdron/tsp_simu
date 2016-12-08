@@ -7,3 +7,4 @@ authors = ["valdron <seehofer.paul@gmail.com>"]
 
 nalgebra = "*"
 rand = "*"
+lazy_static = "*"
